@@ -1,1 +1,98 @@
-<p>dynamic works!</p>
+<h2>Template: <small>Dynamic</small></h2>
+<hr />
+
+<form (ngSubmit)="save()" #myFormDynamic="ngForm" autocomplete="off">
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label"> Name</label>
+    <div class="col-sm-9">
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="person.name"
+        name="name"
+        placeholder="Name of the person."
+        required
+      />
+      <span
+        class="form-text text-danger"
+        *ngIf="
+          myFormDynamic.controls['name']?.errors &&
+          myFormDynamic.controls['name']?.touched
+        "
+      >
+        The name field is required.
+      </span>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label"> Add</label>
+
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newGame"
+          name="newGame"
+          (keyup.enter)="addGame()"
+          placeholder="Add favorite game."
+        />
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          [disabled]="!newGame"
+          (click)="addGame()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Favorites</label>
+
+    <div class="col-sm-9">
+      <div
+        class="input-group mb-1"
+        *ngFor="let game of person.favorites; let i = index"
+      >
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Favorite game."
+          [(ngModel)]="game.name"
+          name="{{ 'game_' + i }}"
+          required
+        />
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="removeGame(i)"
+        >
+          x
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button
+        type="button"
+        class="btn btn-primary float-end px-4"
+        (click)="save()"
+        [disabled]="myFormDynamic.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+
+<span>Person</span>
+<pre>{{ person | json }}</pre>
+
+<span> New Game</span>
+<pre>{{ newGame | json }}</pre>

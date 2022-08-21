@@ -1,1 +1,28 @@
-<p>side-menu works!</p>
+<h2>Template</h2>
+<hr />
+<div class="list-group">
+  <a
+    *ngFor="let item of routes"
+    class="list-group-item list-group-item-action"
+    aria-current="true"
+    [routerLink]="['/template' + item.url]"
+    routerLinkActive="active"
+  >
+    {{ item.name }}
+  </a>
+</div>
+
+<h2 class="mt-4">Reactive</h2>
+<hr />
+<div class="list-group">
+  <a
+    *ngFor="let item of routes"
+    class="list-group-item list-group-item-action"
+    aria-current="true"
+    [routerLink]="['/reactive' + item.url]"
+    routerLinkActive="active"
+  >
+    {{ item.name }}
+  </a>
+</div>
+
