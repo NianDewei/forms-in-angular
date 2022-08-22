@@ -1,1 +1,94 @@
-<p>dynamic works!</p>
+<h2>Reactive: <small>Dynamic</small></h2>
+<hr />
+
+<form (ngSubmit)="save()" [formGroup]="myForm" autocomplete="off">
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label"> Name</label>
+    <div class="col-sm-9">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Name of the person."
+        formControlName="name"
+      />
+      <div *ngIf="ifFieldIsNotValid('name')" class="form-text text-danger mt-1">
+        <div *ngIf="isValidBy('name', 'required')">Name is required.</div>
+        <div *ngIf="isValidBy('name', 'minlength')">
+          Name must be at least 3 characters long.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label"> Add</label>
+
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add favorite game."
+          [formControl]="newFavorite"
+          (keyup.enter)="addFavorite()"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="addFavorite()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row" formArrayName="favorites">
+    <label class="col-sm-3 col-form-label">Favorites</label>
+
+    <div class="col-sm-9">
+      <div
+        class="input-group mb-1"
+        *ngFor="let game of arrayFavorites.controls; let i = index"
+      >
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Favorite game."
+          [formControlName]="i"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="removeFavorite(i)"
+        >
+          x
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button
+        type="button"
+        class="btn btn-primary float-end px-4"
+        (click)="save()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+
+<span>myForm Valid</span>
+<pre>{{ myForm.valid }}</pre>
+
+<span>myForm Value</span>
+<pre>{{ myForm.value | json }}</pre>
+
+<span>newFavorite Valid</span>
+<pre>{{ newFavorite.valid }}</pre>
+
+<span>newFavorite Value</span>
+<pre>{{ newFavorite.value | json }}</pre>

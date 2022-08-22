@@ -1,1 +1,98 @@
-<p>basic works!</p>
+<h2>Reactive: <small>Basic</small></h2>
+<hr />
+
+<div class="row">
+  <div class="col">
+    <form [formGroup]="myFormProduct" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Product</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Product Name"
+            formControlName="name"
+          />
+          <div
+            *ngIf="filedIsValid('name')"
+            class="form-text text-danger mt-1"
+          >
+            <div *ngIf="isValidBy('name', 'required')">Name is required.</div>
+            <div *ngIf="isValidBy('name', 'minlength')">
+              Name must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Price</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="number"
+            formControlName="price"
+            placeholder="Price of Product"
+          />
+          <div
+          *ngIf="filedIsValid('price')"
+          class="form-text text-danger mt-1"
+        >
+          <div *ngIf="isValidBy('price', 'required')">Price is required.</div>
+          <div *ngIf="isValidBy('price', 'min')">
+            Price must be greater than 0
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Stock</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="number"
+            formControlName="stock"
+            placeholder="Stock of Product"
+          />
+          <div
+          *ngIf="filedIsValid('stock')"
+          class="form-text text-danger mt-1"
+        >
+          <div *ngIf="isValidBy('stock', 'required')">Stock is required.</div>
+          <div *ngIf="isValidBy('stock', 'min')">
+            Stock must be greater than 0
+          </div>
+        </div>
+
+        </div>
+      </div>
+      <!-- register button -->
+      <div class="row">
+        <div class="col">
+          <button
+            class="btn btn-primary float-end"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <span>Valid</span>
+    <pre>{{ myFormProduct.valid }}</pre>
+
+    <span>Pristine</span>
+    <pre>{{ myFormProduct.pristine }}</pre>
+
+    <span>Touched</span>
+    <pre>{{ myFormProduct.touched }}</pre>
+
+    <span>Value</span>
+    <pre>{{ myFormProduct.value | json }}</pre>
+  </div>
+</div>
