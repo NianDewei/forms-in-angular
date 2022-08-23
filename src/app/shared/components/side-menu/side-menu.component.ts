@@ -21,4 +21,15 @@ export class SideMenuComponent {
       name: 'Switches',
     },
   ];
+
+  auth: MenuItem[] = [
+    {
+      url: '/login',
+      name: 'Login',
+    },
+    {
+      url: '/register',
+      name: 'Register',
+    },
+  ];
 }

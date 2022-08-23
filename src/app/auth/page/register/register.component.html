@@ -1,0 +1,78 @@
+<h2>Reactive Validations</h2>
+<hr />
+
+<div class="row">
+  <div class="col">
+    <form [formGroup]="myFormLogin" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Name</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Name user."
+            formControlName="name"
+          />
+          <div *ngIf="true" class="form-text text-danger mt-1">
+            <div *ngIf="true">It must be a first and last name format.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="email"
+            placeholder="Your email."
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Username</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="username"
+            placeholder="Your username."
+          />
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Password</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="password"
+            formControlName="password"
+            placeholder="Your password."
+          />
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Confirm</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="password"
+            placeholder="Confirm Password."
+          />
+        </div>
+      </div>
+
+      <!-- register button -->
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary float-end" type="submit">
+            Register
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
