@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { TemplateRoutingModule } from './template-routing.module';
+import { TemplateRoutingModule } from './template.routing';
 import { BasicComponent } from './basic/basic.component';
 import { DynamicComponent } from './dynamic/dynamic.component';
 import { SwitchesComponent } from './switches/switches.component';

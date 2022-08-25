@@ -2,8 +2,14 @@
 <hr />
 
 <div class="row">
-  <div class="col">
-    <form [formGroup]="myFormLogin" autocomplete="off">
+  <div class="col-12">
+    <form
+      (ngSubmit)="save()"
+      [formGroup]="myFormLogin"
+      autocomplete="off"
+      class="needs-validation"
+      novalidate
+    >
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Name</label>
         <div class="col-sm-9">
@@ -13,8 +19,14 @@
             placeholder="Name user."
             formControlName="name"
           />
-          <div *ngIf="true" class="form-text text-danger mt-1">
-            <div *ngIf="true">It must be a first and last name format.</div>
+          <div
+            *ngIf="ifFieldIsNotValid('name')"
+            class="form-text text-danger mt-1"
+          >
+            <div *ngIf="isValidBy('name', 'required')">Name is required.</div>
+            <div *ngIf="isValidBy('name', 'pattern')">
+              It must contain a format of Name and Surname.
+            </div>
           </div>
         </div>
       </div>
@@ -28,6 +40,15 @@
             formControlName="email"
             placeholder="Your email."
           />
+          <div
+            *ngIf="ifFieldIsNotValid('email')"
+            class="form-text text-danger mt-1"
+          >
+            <div *ngIf="isValidBy('email', 'required')">Email is required.</div>
+            <div *ngIf="isValidBy('email', 'pattern')">
+              It must be a valid email: name@domain.com
+            </div>
+          </div>
         </div>
       </div>
       <div class="mb-3 row">
@@ -38,7 +59,19 @@
             type="text"
             formControlName="username"
             placeholder="Your username."
+            autocomplete="username"
           />
+          <div
+            *ngIf="ifFieldIsNotValid('username')"
+            class="form-text text-danger mt-1"
+          >
+            <div *ngIf="isValidBy('username', 'required')">
+              Username is required.
+            </div>
+            <div *ngIf="isValidBy('username', 'isHacker')">
+              Can't be hacker.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -46,11 +79,24 @@
         <label class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-9">
           <input
-            class="form-control"
+            [class]="isMatchClass()"
             type="password"
+            autocomplete="new-password"
             formControlName="password"
             placeholder="Your password."
           />
+
+          <div
+            *ngIf="ifFieldIsNotValid('password')"
+            class="form-text text-danger mt-1"
+          >
+            <div *ngIf="isValidBy('password', 'required')">
+              Password is required.
+            </div>
+            <div *ngIf="isValidBy('password', 'maxlength')">
+              The password must contain a maximum of 8 characters
+            </div>
+          </div>
         </div>
       </div>
 
@@ -58,10 +104,23 @@
         <label class="col-sm-3 col-form-label">Confirm</label>
         <div class="col-sm-9">
           <input
-            class="form-control"
+            [class]="isMatchClass()"
             type="password"
+            autocomplete="new-password"
             placeholder="Confirm Password."
+            formControlName="confirm"
           />
+          <div
+            *ngIf="ifFieldIsNotValid('confirm')"
+            class="form-text text-danger mt-1"
+          >
+            <div *ngIf="isValidBy('confirm', 'required')">
+              Confirm password is required.
+            </div>
+            <div *ngIf="isValidBy('confirm', 'noMatch')">
+              Password must match
+            </div>
+          </div>
         </div>
       </div>
 
@@ -74,5 +133,31 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div class="col-12 float-end">
+    <p>Login -> Valid</p>
+    <pre>{{ myFormLogin.valid | json }}</pre>
+
+    <p>Login -> Value</p>
+    <pre>{{ myFormLogin.value | json }}</pre>
+
+    <p>Name:</p>
+    <pre>{{ myFormLogin.get("name")?.errors | json }}</pre>
+
+    <p>email:</p>
+    <pre>{{ myFormLogin.get("email")?.errors | json }}</pre>
+
+    <p>Username:</p>
+    <pre>{{ myFormLogin.get("username")?.errors | json }}</pre>
+
+    <p>Password:</p>
+    <pre>{{ myFormLogin.get("password")?.errors | json }}</pre>
+
+    <p>Confirm:</p>
+    <pre>{{ myFormLogin.get("confirm")?.errors | json }}</pre>
+
+    <p>Form:</p>
+    <pre>{{ myFormLogin.errors | json }}</pre>
   </div>
 </div>
