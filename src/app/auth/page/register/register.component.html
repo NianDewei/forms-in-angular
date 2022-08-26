@@ -48,6 +48,9 @@
             <div *ngIf="isValidBy('email', 'pattern')">
               It must be a valid email: name@domain.com
             </div>
+            <div *ngIf="isValidBy('email', 'emailExists')">
+              This email is already registered.
+            </div>
           </div>
         </div>
       </div>
@@ -127,7 +130,11 @@
       <!-- register button -->
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary float-end" type="submit">
+          <button
+            class="btn btn-primary float-end"
+            type="submit"
+            [disabled]="myFormLogin.pending"
+          >
             Register
           </button>
         </div>
@@ -138,6 +145,12 @@
   <div class="col-12 float-end">
     <p>Login -> Valid</p>
     <pre>{{ myFormLogin.valid | json }}</pre>
+
+    <p>Login -> Status</p>
+    <pre>{{ myFormLogin.status | json }}</pre>
+
+    <p>Login -> Pending</p>
+    <pre>{{ myFormLogin.pending | json }}</pre>
 
     <p>Login -> Value</p>
     <pre>{{ myFormLogin.value | json }}</pre>

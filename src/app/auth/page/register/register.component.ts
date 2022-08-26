@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailValidatorService } from 'src/app/shared/validator/email-validator.service';
 import { ValidationsService } from 'src/app/shared/validator/validations.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
       email: [
         '',
         [Validators.required, Validators.pattern(this._vs.emailFormat)],
+        [this._emailValidator],
       ],
       username: ['', [Validators.required, this._vs.cantBeHacker]],
       password: ['', [Validators.required, Validators.maxLength(8)]],
@@ -30,7 +32,11 @@ export class RegisterComponent implements OnInit {
     }
   );
 
-  constructor(private _fb: FormBuilder, private _vs: ValidationsService) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _vs: ValidationsService,
+    private _emailValidator: EmailValidatorService
+  ) {}
   matchPassword: boolean = false;
   ngOnInit(): void {
     this.myFormLogin.reset({
@@ -51,9 +57,7 @@ export class RegisterComponent implements OnInit {
     return isvalid;
   }
 
-
   isMatchClass(): string {
-
     const isMatchPassword = Boolean(this.myFormLogin.getError('noMatch'));
     const condition = this._sameLengthPassAndConfirm() && !isMatchPassword;
 
@@ -67,7 +71,6 @@ export class RegisterComponent implements OnInit {
     const sameLength: boolean | 0 = password?.length && confirm?.length === 8;
     return sameLength;
   }
-
 
   // methods of the Form
   save() {
